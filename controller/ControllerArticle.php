@@ -89,7 +89,7 @@ class ControllerArticle extends controller {
     }
 
     public function update(){
-        print_r($_POST); die();
+        // print_r($_POST); die();
         // extract($_POST);
         // $validation = new Validation;
         // $validation->name('titre')->value($titre)->max(200)->min(1);
