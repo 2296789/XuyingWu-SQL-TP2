@@ -1,7 +1,7 @@
 <?php
 abstract class CRUD extends PDO {
     public function __construct(){
-        parent::__construct('mysql:host=localhost; dbname=e2296789; port=3306; charset=utf8', 'root', 'JLl2AH6eOoD6Ru7pOjhO');
+        parent::__construct('mysql:host=localhost; dbname=blog; port=3306; charset=utf8', 'root', 'root');
     }
 
     public function select($field='id', $order='ASC'){
@@ -17,7 +17,8 @@ abstract class CRUD extends PDO {
         if($count == 1){
             return $stmt->fetch();
         }else{
-            RequirePage::url('home/error/404');
+            // RequirePage::url('home/error/404');
+            RequirePage::url('home');
         }  
     }
 
@@ -41,10 +42,9 @@ abstract class CRUD extends PDO {
         if($stmt->execute()){
             return $this->lastInsertId();
         }else{
-            return $stmt->errorInfo();
+            // return $stmt->errorInfo();
+            RequirePage::url('home');
         }
-        // $stmt->execute();
-        // return $this->lastInsertId();
     }
 
     public function update($data){ 
@@ -63,18 +63,25 @@ abstract class CRUD extends PDO {
         if($stmt->execute()){
             return true;
         }else{
-            return $stmt->errorInfo();
+            // return $stmt->errorInfo();
+            RequirePage::url('home');
         }
     }
 
     public function delete($value){
+        // print_r($value);
         $sql = "DELETE FROM $this->table WHERE $this->primaryKey = :$this->primaryKey";
         $stmt = $this->prepare($sql);
         $stmt->bindValue(":$this->primaryKey", $value);
+
         if($stmt->execute()){
+            // print_r("ok");
             return true;
         }else{
-            return $stmt->errorInfo();
+            // return $stmt->errorInfo();
+            RequirePage::url('home');
+            // $errorInfo = $stmt->errorInfo();
+            // print_r($errorInfo);
         }
     }
 }
